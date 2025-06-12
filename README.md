@@ -63,7 +63,7 @@ tools are installed:
 
 ```bash
 sudo apt update
-sudo apt install -y bison flex ninja-build cmake gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
+sudo apt install -y bison flex ninja-build cmake gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
 ```
 
 ### Bootable images

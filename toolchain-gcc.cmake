@@ -33,7 +33,17 @@ endif()
 
 # The name of the target operating system
 set(CMAKE_SYSTEM_NAME Windows)
-set(CMAKE_SYSTEM_PROCESSOR i686)
+if(NOT CMAKE_SYSTEM_PROCESSOR)
+    if(ARCH STREQUAL "i386")
+        set(CMAKE_SYSTEM_PROCESSOR i686)
+    elseif(ARCH STREQUAL "amd64")
+        set(CMAKE_SYSTEM_PROCESSOR x86_64)
+    elseif(ARCH STREQUAL "arm")
+        set(CMAKE_SYSTEM_PROCESSOR arm)
+    else()
+        set(CMAKE_SYSTEM_PROCESSOR ${ARCH})
+    endif()
+endif()
 
 # Which tools to use
 require_program(CMAKE_C_COMPILER ${MINGW_TOOLCHAIN_PREFIX}gcc${MINGW_TOOLCHAIN_SUFFIX})

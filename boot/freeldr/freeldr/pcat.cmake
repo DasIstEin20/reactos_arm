@@ -137,11 +137,12 @@ elseif(ARCH STREQUAL "amd64")
         arch/i386/pc/pcvesa.c
         arch/i386/pc/pcvideo.c)
 
-elseif(ARCH STREQUAL "arm")
+elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm")
     list(APPEND PCATLDR_COMMON_ASM_SOURCE
         arch/arm/boot.S)
 
     list(APPEND PCATLDR_ARC_SOURCE
+        arch/arm/debug.c
         arch/arm/entry.c
         arch/arm/macharm.c)
 else()
@@ -194,7 +195,7 @@ set_target_properties(freeldr_pe
     DEFINE_SYMBOL "")
 
 if(MSVC)
-    if(ARCH STREQUAL "arm")
+    if(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm")
         target_link_options(freeldr_pe PRIVATE /ignore:4078 /ignore:4254 /DRIVER)
     else()
         target_link_options(freeldr_pe PRIVATE /ignore:4078 /ignore:4254 /DYNAMICBASE:NO /FIXED /FILEALIGN:512 /ALIGN:512)
@@ -243,7 +244,7 @@ if(SARCH STREQUAL "pc98")
         VERBATIM)
 endif()
 
-if(NOT ARCH STREQUAL "arm")
+if(NOT CMAKE_SYSTEM_PROCESSOR STREQUAL "arm")
     concatenate_files(
         ${CMAKE_CURRENT_BINARY_DIR}/freeldr.sys
         ${CMAKE_CURRENT_BINARY_DIR}/frldr16.bin
@@ -253,9 +254,13 @@ else()
     add_custom_target(freeldr ALL DEPENDS freeldr_pe)
 endif()
 
-add_cd_file(TARGET freeldr FILE ${CMAKE_CURRENT_BINARY_DIR}/freeldr.sys DESTINATION loader NO_CAB NOT_IN_HYBRIDCD FOR bootcd livecd hybridcd regtest)
+if(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm")
+    add_cd_file(TARGET freeldr_pe FILE $<TARGET_FILE:freeldr_pe> DESTINATION loader NO_CAB NAME_ON_CD freeldr.sys FOR bootcd livecd hybridcd regtest)
+else()
+    add_cd_file(TARGET freeldr FILE ${CMAKE_CURRENT_BINARY_DIR}/freeldr.sys DESTINATION loader NO_CAB NOT_IN_HYBRIDCD FOR bootcd livecd hybridcd regtest)
+endif()
 
-if(ARCH STREQUAL "arm")
+if(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm")
     # ARM32 PORT: Ship device tree blobs with ARM builds
     file(GLOB ARM_DTB_FILES ${REACTOS_SOURCE_DIR}/misc/dtb/*.dtb)
     foreach(_dtb ${ARM_DTB_FILES})
