@@ -58,6 +58,14 @@ See ["Building ReactOS"](https://reactos.org/wiki/Building_ReactOS) article for 
 
 To build ReactOS you must run the `configure` script in the directory you want to have your build files. Choose `configure.cmd` or `configure.sh` depending on your system. Then run `ninja <modulename>` to build a module you want or just `ninja` to build all modules.
 
+When building on Debian or Ubuntu based systems make sure the required build
+tools are installed:
+
+```bash
+sudo apt update
+sudo apt install -y bison flex ninja-build cmake gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
+```
+
 ### Bootable images
 
 To build a bootable CD image run `ninja bootcd` from the build directory. This will create a CD image with a filename `bootcd.iso`.

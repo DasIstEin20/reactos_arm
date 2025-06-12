@@ -5,7 +5,12 @@ include(ExternalProject)
 function(setup_host_tools)
     list(APPEND HOST_TOOLS asmpp bin2c widl gendib cabman fatten hpp isohybrid mkhive mkisofs obj2bin spec2def geninc mkshelllink txt2nls utf16le xml2sdb)
     if(NOT MSVC)
-        list(APPEND HOST_TOOLS rsym pefixup)
+        if(MINGW_TOOLCHAIN_PREFIX STREQUAL "arm-linux-gnueabi-")
+            # The minimal ARM toolchain lacks rsym/pefixup support
+            list(APPEND HOST_TOOLS pefixup)
+        else()
+            list(APPEND HOST_TOOLS rsym pefixup)
+        endif()
     endif()
     if ((ARCH STREQUAL "amd64") AND (CMAKE_C_COMPILER_ID STREQUAL "GNU"))
         execute_process(
@@ -90,6 +95,9 @@ function(setup_host_tools)
             -DROS_SAVED_BISON_PKGDATADIR=${ROS_SAVED_BISON_PKGDATADIR}
             -DROS_SAVED_M4=${ROS_SAVED_M4}
             )
+    endif()
+    if(DEFINED MINGW_TOOLCHAIN_PREFIX)
+        list(APPEND CMAKE_HOST_TOOLS_EXTRA_ARGS -DMINGW_TOOLCHAIN_PREFIX=${MINGW_TOOLCHAIN_PREFIX})
     endif()
 
     ExternalProject_Add(host-tools
