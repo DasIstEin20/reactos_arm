@@ -37,6 +37,8 @@ jobs:
         ./build_rosbe_ci.sh ${{github.workspace}}/RosBE-CI
     - name: Install ccache
       run: sudo apt install ccache
+    - name: Install Flex & Bison
+      run: sudo apt update && sudo apt install -y bison flex
     - name: Install LLVM
       if: ${{ matrix.compiler == 'clang' }}
       run: |
