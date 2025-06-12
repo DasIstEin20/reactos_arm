@@ -8,7 +8,7 @@ macro(require_program varname execname)
 endmacro()
 
 # pass variables necessary for the toolchain (needed for try_compile)
-set(CMAKE_TRY_COMPILE_PLATFORM_VARIABLES ARCH)
+set(CMAKE_TRY_COMPILE_PLATFORM_VARIABLES ARCH MINGW_TOOLCHAIN_PREFIX)
 
 # Choose the right MinGW toolchain prefix
 if(NOT DEFINED MINGW_TOOLCHAIN_PREFIX)
@@ -40,9 +40,18 @@ require_program(CMAKE_C_COMPILER ${MINGW_TOOLCHAIN_PREFIX}gcc${MINGW_TOOLCHAIN_S
 require_program(CMAKE_CXX_COMPILER ${MINGW_TOOLCHAIN_PREFIX}g++${MINGW_TOOLCHAIN_SUFFIX})
 require_program(CMAKE_ASM_COMPILER ${MINGW_TOOLCHAIN_PREFIX}gcc${MINGW_TOOLCHAIN_SUFFIX})
 set(CMAKE_ASM_COMPILER_ID "GNU")
-require_program(CMAKE_MC_COMPILER ${MINGW_TOOLCHAIN_PREFIX}windmc)
-require_program(CMAKE_RC_COMPILER ${MINGW_TOOLCHAIN_PREFIX}windres)
-require_program(CMAKE_DLLTOOL ${MINGW_TOOLCHAIN_PREFIX}dlltool)
+# ARM toolchains distributed by many Linux distros do not provide the
+# Windows specific utilities (windmc, windres, dlltool).  When using such
+# a toolchain (e.g. arm-linux-gnueabi-), skip checking for these tools and
+# rely only on objcopy and the compilers.  This is sufficient for building
+# freeldr and a few other components.
+if(MINGW_TOOLCHAIN_PREFIX STREQUAL "arm-linux-gnueabi-")
+    message(STATUS "Using minimal ARM toolchain without windmc/windres/dlltool")
+else()
+    require_program(CMAKE_MC_COMPILER ${MINGW_TOOLCHAIN_PREFIX}windmc)
+    require_program(CMAKE_RC_COMPILER ${MINGW_TOOLCHAIN_PREFIX}windres)
+    require_program(CMAKE_DLLTOOL ${MINGW_TOOLCHAIN_PREFIX}dlltool)
+endif()
 #set(CMAKE_AR ${MINGW_TOOLCHAIN_PREFIX}gcc-ar${MINGW_TOOLCHAIN_SUFFIX})
 require_program(CMAKE_OBJCOPY ${MINGW_TOOLCHAIN_PREFIX}objcopy)
 
