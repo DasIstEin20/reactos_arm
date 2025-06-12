@@ -254,3 +254,11 @@ else()
 endif()
 
 add_cd_file(TARGET freeldr FILE ${CMAKE_CURRENT_BINARY_DIR}/freeldr.sys DESTINATION loader NO_CAB NOT_IN_HYBRIDCD FOR bootcd livecd hybridcd regtest)
+
+if(ARCH STREQUAL "arm")
+    # ARM32 PORT: Ship device tree blobs with ARM builds
+    file(GLOB ARM_DTB_FILES ${REACTOS_SOURCE_DIR}/misc/dtb/*.dtb)
+    foreach(_dtb ${ARM_DTB_FILES})
+        add_cd_file(FILE ${_dtb} DESTINATION loader NO_CAB FOR bootcd livecd hybridcd regtest)
+    endforeach()
+endif()

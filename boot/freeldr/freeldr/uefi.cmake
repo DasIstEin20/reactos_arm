@@ -147,3 +147,11 @@ if(RUNTIME_CHECKS)
 endif()
 
 add_dependencies(uefildr xdk)
+
+if(ARCH STREQUAL "arm")
+    # ARM32 PORT: Ship device tree blobs with ARM builds
+    file(GLOB ARM_DTB_FILES ${REACTOS_SOURCE_DIR}/misc/dtb/*.dtb)
+    foreach(_dtb ${ARM_DTB_FILES})
+        add_cd_file(FILE ${_dtb} DESTINATION loader NO_CAB FOR bootcd livecd hybridcd regtest)
+    endforeach()
+endif()
