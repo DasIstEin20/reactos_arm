@@ -1,3 +1,4 @@
+# pulled from codex branch ARM32 config
 
 macro(require_program varname execname)
     find_program(${varname} ${execname})
