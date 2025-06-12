@@ -1,0 +1,6 @@
+jobs:
+  cancel-everything:
+    runs-on: ubuntu-latest
+    steps:
+      - name: No, thanks
+        run: echo "Bye matrix!"
