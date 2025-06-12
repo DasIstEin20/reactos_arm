@@ -143,7 +143,7 @@ if(NOT CMAKE_CROSSCOMPILING)
             add_definitions(/D_X86_ /D__i386__ /DWIN32 /D_WINDOWS)
         elseif(ARCH STREQUAL "amd64")
             add_definitions(-D_AMD64_ -D__x86_64__ /DWIN32 -D_WINDOWS)
-        elseif(ARCH STREQUAL "arm")
+        elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm")
             add_definitions(-D__arm__)
         elseif(ARCH STREQUAL "arm64")
             add_definitions(-D__aarch64__)
@@ -266,7 +266,7 @@ Enable this if the module uses typeid or dynamic_cast. You will probably need to
             add_compile_definitions(_M_AMD64 _M_X64)
         endif()
         add_definitions(-D_AMD64_ -D__x86_64__ -D_WIN64)
-    elseif(ARCH STREQUAL "arm")
+    elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm")
         # _M_ARM is already defined by toolchain
         add_definitions(-D_ARM_ -D__arm__ -DWIN32)
         if(SARCH STREQUAL "omap3-zoom2")
@@ -283,7 +283,7 @@ Enable this if the module uses typeid or dynamic_cast. You will probably need to
         add_definitions(-DUSE_COMPILER_EXCEPTIONS -D_USE_32BIT_TIME_T)
     elseif(ARCH STREQUAL "amd64")
         add_compile_definitions(USE_COMPILER_EXCEPTIONS)
-    elseif(ARCH STREQUAL "arm")
+    elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm")
         add_compile_definitions(USE_COMPILER_EXCEPTIONS)
     elseif(ARCH STREQUAL "arm64")
         add_compile_definitions(USE_COMPILER_EXCEPTIONS)
@@ -338,7 +338,7 @@ Enable this if the module uses typeid or dynamic_cast. You will probably need to
         sdk/include/reactos/libs
         sdk/lib/pseh/include)
 
-    if(ARCH STREQUAL "arm")
+    if(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm")
         include_directories(${REACTOS_SOURCE_DIR}/sdk/include/reactos/arm)
     endif()
 
