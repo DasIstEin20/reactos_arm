@@ -1,6 +1,38 @@
+name: Build ARM MSVC
+
+on:
+  push:
+  pull_request:
+
 jobs:
   cancel-everything:
     runs-on: ubuntu-latest
     steps:
       - name: No, thanks
         run: echo "Bye matrix!"
+
+  build-msvc-arm:
+    runs-on: windows-2022
+    needs: cancel-everything
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: amd64_arm
+      - name: Configure MSVC ARM build
+        run: .\configure.cmd VSSolution -DARCH=arm
+      - name: Build ReactOS
+        run: ninja bootcd
+      - name: Package WinPE Hybrid
+        shell: pwsh
+        run: .\scripts\winpe-package.ps1 -BuildDir $PWD -Output reactos-msvc14-arm-WinPE.zip
+      - name: Upload ISO
+        uses: actions/upload-artifact@v3
+        with:
+          name: reactos-arm-bootcd
+          path: bootcd.iso
+      - name: Upload WinPE Hybrid
+        uses: actions/upload-artifact@v3
+        with:
+          name: reactos-msvc14-arm-WinPE
+          path: reactos-msvc14-arm-WinPE.zip
