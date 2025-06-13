@@ -17,6 +17,9 @@
  */
 
 #include "schilyio.h"
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 
 EXPORT ssize_t
 _niwrite(f, buf, count)

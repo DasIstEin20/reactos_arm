@@ -13,6 +13,9 @@
 
 #include <string.h>
 #include <stdlib.h>
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 
 #include <libxml/xmlmemory.h>
 #include <libxml/tree.h>

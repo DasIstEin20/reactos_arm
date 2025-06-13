@@ -29,6 +29,9 @@
 
 #ifndef __REACTOS__
 #include <fcntl.h>		/* for off_t */
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 #endif
 
 #ifndef __REACTOS__

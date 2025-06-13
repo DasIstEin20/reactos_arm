@@ -30,6 +30,9 @@ static	UConst char sccsid[] =
 #include <schily/utypes.h>
 #include <schily/intcvt.h>
 #include <schily/schily.h>
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 #include "sunlabel.h"
 
 extern	int	use_sunx86boot;

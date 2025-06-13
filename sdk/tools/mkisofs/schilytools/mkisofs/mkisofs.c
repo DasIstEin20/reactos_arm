@@ -53,6 +53,9 @@ static	UConst char sccsid[] =
 #endif
 
 #include <schily/io.h>				/* for setmode() prototype */
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 #include <schily/getargs.h>
 
 #ifdef VMS

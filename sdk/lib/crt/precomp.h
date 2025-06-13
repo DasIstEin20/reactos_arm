@@ -23,6 +23,9 @@
 #include <math.h>
 #include <limits.h>
 #include <io.h>
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 
 #include <sys/stat.h>
 #include <sys/locking.h>

@@ -4,6 +4,9 @@
  */
 
 #include "gzguts.h"
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 
 /* Local functions */
 local int gz_init OF((gz_statep));

@@ -39,6 +39,9 @@ static	UConst char sccsid[] =
 #endif /* SORTING */
 #include <schily/errno.h>
 #include <schily/schily.h>
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 #include <schily/checkerr.h>
 #ifdef DVD_AUD_VID
 #include "dvd_reader.h"

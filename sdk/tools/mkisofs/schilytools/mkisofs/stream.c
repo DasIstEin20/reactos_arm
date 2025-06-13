@@ -28,6 +28,9 @@ static	UConst char sccsid[] =
 #include "mkisofs.h"
 #include "iso9660.h"
 #include <schily/schily.h>
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 
 LOCAL int	size_str_file	__PR((UInt32_t starting_extent));
 LOCAL int	size_str_dir	__PR((UInt32_t starting_extent));
