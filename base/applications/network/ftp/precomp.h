@@ -28,6 +28,9 @@
 #include <io.h>
 #include <stdio.h>
 #include <stdlib.h>
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 
 #include "ftp_var.h"
 

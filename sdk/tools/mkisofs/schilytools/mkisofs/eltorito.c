@@ -37,6 +37,9 @@ static	UConst char sccsid[] =
 #include "diskmbr.h"
 #include "bootinfo.h"
 #include <schily/schily.h>
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 
 #undef MIN
 #define	MIN(a, b) (((a) < (b))? (a): (b))

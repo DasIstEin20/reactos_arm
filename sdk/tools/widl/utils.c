@@ -28,6 +28,9 @@
 #include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 
 #include "widl.h"
 #include "utils.h"

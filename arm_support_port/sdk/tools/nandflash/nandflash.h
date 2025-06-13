@@ -11,6 +11,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <fcntl.h>
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 #include <typedefs.h>
 
 /* NAND Image Sizes */

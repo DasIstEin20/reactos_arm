@@ -16,6 +16,9 @@
 
 #ifdef _MSC_VER
 #include <io.h>
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 
 #if(defined(WINAPI_FAMILY) && (WINAPI_FAMILY==WINAPI_FAMILY_APP))
 #define WINDOWS_UWP

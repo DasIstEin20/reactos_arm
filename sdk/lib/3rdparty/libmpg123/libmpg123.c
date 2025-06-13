@@ -9,6 +9,9 @@
 #include "mpg123lib_intern.h"
 #include "icy2utf8.h"
 #include "debug.h"
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 
 #include "gapless.h"
 /* Want accurate rounding function regardless of decoder setup. */
