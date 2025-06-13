@@ -76,7 +76,7 @@ list(APPEND FREELDR_NTLDR_SOURCE
     ntldr/wlmemory.c
     ntldr/wlregistry.c)
 
-if(ARCH STREQUAL "i386")
+if(ARCH STREQUAL "i386" OR ARCH STREQUAL "arm")
 
     list(APPEND FREELDR_COMMON_ASM_SOURCE
         arch/i386/i386trap.S)
@@ -114,7 +114,7 @@ list(APPEND FREELDR_BASE_SOURCE
     ntldr/ntldropts.c # Should be in rosload, but is currently needed by machpc.c, etc.
     lib/rtl/libsupp.c)
 
-if(ARCH STREQUAL "i386" OR ARCH STREQUAL "amd64")
+if(ARCH STREQUAL "i386" OR ARCH STREQUAL "arm" OR ARCH STREQUAL "amd64")
     # Must be included together with disk/scsiport.c
     list(APPEND FREELDR_BASE_SOURCE
         ${CMAKE_CURRENT_BINARY_DIR}/freeldr.def)
@@ -122,6 +122,6 @@ endif()
 
 include(pcat.cmake)
 include(rosload.cmake)
-if(NOT ARCH STREQUAL "i386" OR NOT (SARCH STREQUAL "pc98" OR SARCH STREQUAL "xbox"))
+if(NOT (ARCH STREQUAL "i386" OR ARCH STREQUAL "arm") OR NOT (SARCH STREQUAL "pc98" OR SARCH STREQUAL "xbox"))
     include(uefi.cmake)
 endif()

@@ -9,7 +9,7 @@
 ##              Copyright 2023 Hermès Bélusca-Maïto <hermes.belusca-maito@reactos.org>
 ##
 
-if(ARCH STREQUAL "i386")
+if(ARCH STREQUAL "i386" OR ARCH STREQUAL "arm")
     CreateBootSectorTarget(frldr16
         ${CMAKE_CURRENT_SOURCE_DIR}/arch/realmode/i386.S
         ${CMAKE_CURRENT_BINARY_DIR}/frldr16.bin
@@ -34,7 +34,7 @@ list(APPEND PCATLDR_BOOTMGR_SOURCE
 
 list(APPEND PCATLDR_BASE_ASM_SOURCE)
 
-if(ARCH STREQUAL "i386")
+if(ARCH STREQUAL "i386" OR ARCH STREQUAL "arm")
     list(APPEND PCATLDR_BASE_ASM_SOURCE
         arch/i386/multiboot.S)
 
@@ -177,7 +177,7 @@ add_pch(freeldr_common include/freeldr.h PCH_SOURCE)
 add_dependencies(freeldr_common bugcodes asm xdk)
 
 ## GCC builds need this extra thing for some reason...
-if(ARCH STREQUAL "i386" AND NOT MSVC)
+if((ARCH STREQUAL "i386" OR ARCH STREQUAL "arm") AND NOT MSVC)
     target_link_libraries(freeldr_common mini_hal)
 endif()
 
@@ -218,7 +218,7 @@ set_image_base(freeldr_pe 0x10000)
 set_subsystem(freeldr_pe native)
 set_entrypoint(freeldr_pe RealEntryPoint)
 
-if(ARCH STREQUAL "i386")
+if(ARCH STREQUAL "i386" OR ARCH STREQUAL "arm")
     target_link_libraries(freeldr_pe mini_hal)
 endif()
 

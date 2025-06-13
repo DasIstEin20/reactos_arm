@@ -30,7 +30,7 @@ list(APPEND SOURCE
     ${NTOS_RTL_SOURCE_DIR}/unicode.c
     ${NTOS_RTL_SOURCE_DIR}/rtl.h)
 
-if(ARCH STREQUAL "i386")
+if(ARCH STREQUAL "i386" OR ARCH STREQUAL "arm")
     list(APPEND ASM_SOURCE
         ${NTOS_RTL_SOURCE_DIR}/i386/debug_asm.S
         ${NTOS_RTL_SOURCE_DIR}/i386/rtlmem.s

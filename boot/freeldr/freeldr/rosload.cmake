@@ -26,7 +26,7 @@ list(APPEND ROSLOAD_SOURCE
     ntldr/wlregistry.c
 )
 
-if(ARCH STREQUAL "i386")
+if(ARCH STREQUAL "i386" OR ARCH STREQUAL "arm")
 
     list(APPEND ROSLOAD_SOURCE
         arch/i386/halstub.c
@@ -84,7 +84,7 @@ set_image_base(rosload 0x10000) # 0x200000
 set_subsystem(rosload native)
 set_entrypoint(rosload RunLoader)
 
-if(ARCH STREQUAL "i386")
+if(ARCH STREQUAL "i386" OR ARCH STREQUAL "arm")
     target_link_libraries(rosload mini_hal)
 endif()
 
