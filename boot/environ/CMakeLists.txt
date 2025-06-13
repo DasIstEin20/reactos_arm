@@ -44,7 +44,7 @@ list(APPEND BOOTLIB_SOURCE
      lib/io/display/efi/gop.c
      lib/io/display/efi/uga.c)
 
-if(ARCH STREQUAL "i386")
+if(ARCH STREQUAL "i386" OR ARCH STREQUAL "arm")
     list(APPEND BOOTLIB_ASM_SOURCE
          lib/arch/i386/transfer.s
          )
@@ -119,7 +119,7 @@ list(APPEND ROSLOAD_BASE_SOURCE
      app/rosload/roslogo.c
      )
 
-if(ARCH STREQUAL "i386")
+if(ARCH STREQUAL "i386" OR ARCH STREQUAL "arm")
     list(APPEND ROSLOAD_ASM_SOURCE
          app/rosload/i386/osxfera.s
          )
@@ -143,7 +143,7 @@ else()
     set_subsystem(rosload 16)
 endif()
 
-if(ARCH STREQUAL "i386")
+if(ARCH STREQUAL "i386" OR ARCH STREQUAL "arm")
     set_entrypoint(rosload OslMain 4)
 else()
     set_entrypoint(rosload OslMain)

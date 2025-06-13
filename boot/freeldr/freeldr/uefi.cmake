@@ -23,7 +23,7 @@ list(APPEND UEFILDR_ARC_SOURCE
     arch/uefi/uefivid.c
     arch/vgafont.c)
 
-if(ARCH STREQUAL "i386")
+if(ARCH STREQUAL "i386" OR ARCH STREQUAL "arm")
     list(APPEND UEFILDR_ARC_SOURCE
         arch/i386/i386idt.c)
     list(APPEND UEFILDR_COMMON_ASM_SOURCE
@@ -76,7 +76,7 @@ add_pch(uefifreeldr_common include/arch/uefi/uefildr.h PCH_SOURCE)
 add_dependencies(uefifreeldr_common bugcodes asm xdk)
 
 ## GCC builds need this extra thing for some reason...
-if(ARCH STREQUAL "i386" AND NOT MSVC)
+if((ARCH STREQUAL "i386" OR ARCH STREQUAL "arm") AND NOT MSVC)
     target_link_libraries(uefifreeldr_common mini_hal)
 endif()
 
@@ -91,7 +91,7 @@ list(APPEND UEFILDR_BASE_SOURCE
     ntldr/inffile.c
     ${FREELDR_BASE_SOURCE})
 
-if(ARCH STREQUAL "i386")
+if(ARCH STREQUAL "i386" OR ARCH STREQUAL "arm")
     # Must be included together with disk/scsiport.c
     list(APPEND UEFILDR_BASE_SOURCE
         ${CMAKE_CURRENT_BINARY_DIR}/uefildr.def)
@@ -131,7 +131,7 @@ endif()
 
 set_entrypoint(uefildr EfiEntry)
 
-if(ARCH STREQUAL "i386")
+if(ARCH STREQUAL "i386" OR ARCH STREQUAL "arm")
     target_link_libraries(uefildr mini_hal)
 endif()
 
